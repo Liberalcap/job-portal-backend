@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/applications")
+@RequestMapping("/api/applications")
 @CrossOrigin(origins = "http://localhost:5173") //for backend and frontend
 public class ApplicationController {
 
@@ -25,7 +25,7 @@ public class ApplicationController {
     public ApplicationResponse apply(@PathVariable Long jobId,
                                      Authentication authentication) {
 
-        String email = authentication.getName();
+        String email = authentication.getName(); // ✅ real user
         return applicationService.applyToJob(jobId, email);
     }
     @GetMapping("/my")

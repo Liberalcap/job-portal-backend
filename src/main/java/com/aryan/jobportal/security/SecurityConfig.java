@@ -39,7 +39,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/auth/**", "/users/register", "/error").permitAll()
                         .requestMatchers("/api/jobs/**").permitAll()
-                        .requestMatchers("/api/applications/**").permitAll()
+                        .requestMatchers("/api/applications/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/users", "/users/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/users/**").authenticated()
                         .anyRequest().authenticated()   // 🔥 ALWAYS LAST

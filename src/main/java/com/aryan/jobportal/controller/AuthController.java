@@ -39,26 +39,24 @@ public class AuthController {
 
         User user = userService.getUserByEmail(authRequest.getEmail());
 
-        // ✅ Check user exists
         if (user == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found");
         }
 
-        // ✅ Check password
         if (!passwordEncoder.matches(authRequest.getPassword(), user.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid password");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password");
         }
 
-        // ✅ Create UserDetails
+        // ✅ create token
         UserDetails userDetails = org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
                 .password(user.getPassword())
                 .authorities(user.getRole())
                 .build();
 
-        // ✅ Generate token
         String token = jwtService.generateToken(userDetails);
 
+        // ✅ RETURN RESPONSE
         return new AuthResponse(token, user.getEmail(), user.getRole());
     }
 }

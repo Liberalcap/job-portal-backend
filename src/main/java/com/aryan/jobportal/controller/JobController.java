@@ -36,4 +36,10 @@ public class JobController {
     public JobResponse getJobById(@PathVariable Long id) {
         return jobService.getJobById(id);
     }
+
+    @GetMapping("/my")
+    public List<JobResponse> getMyJobs(Authentication authentication) {
+        String email = authentication.getName();
+        return jobService.getJobsByRecruiter(email);
+    }
 }

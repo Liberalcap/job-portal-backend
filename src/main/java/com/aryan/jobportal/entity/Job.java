@@ -17,6 +17,7 @@ public class Job {
     private String company;
     private String location;
     private Double salary;
+    private String postedBy;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -32,17 +32,32 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> {})   // 🔥 THIS FIXES YOUR ISSUE
+                .cors(cors -> {})
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+
+                        // ✅ allow preflight
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // ✅ auth endpoints
                         .requestMatchers("/api/auth/**", "/users/register", "/error").permitAll()
-                        .requestMatchers("/api/jobs/**").permitAll()
+
+                        // ✅ public job endpoints
+                        .requestMatchers(HttpMethod.GET, "/api/jobs").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/jobs/all").permitAll()
+
+                        // 🔥 PROTECTED (IMPORTANT)
+                        .requestMatchers("/api/jobs/my").authenticated()
+
+                        // ✅ applications (already correct)
                         .requestMatchers("/api/applications/**").authenticated()
+
+                        // ✅ users
                         .requestMatchers(HttpMethod.GET, "/users", "/users/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/users/**").authenticated()
-                        .anyRequest().authenticated()   // 🔥 ALWAYS LAST
+
+                        .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -73,19 +73,16 @@ public class UserService {
         User loggedInUser = userRepository.findByEmail(loggedInEmail)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
 
-        // ADMIN can delete anyone
-        if (loggedInUser.getRole().equals("ROLE_ADMIN")) {
-            userRepository.deleteById(id);
-            return;
+        User userToDelete = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        // 🔐 Permission check
+        if (!loggedInUser.getRole().equals("ROLE_ADMIN") &&
+                !loggedInUser.getId().equals(userToDelete.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to delete this user");
         }
 
-        // USER can delete only their own account
-        if (loggedInUser.getId().equals(id)) {
-            userRepository.deleteById(id);
-            return;
-        }
-
-        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to delete this user");
+        userRepository.delete(userToDelete);
     }
 
     private String normalizeRole(String role) {

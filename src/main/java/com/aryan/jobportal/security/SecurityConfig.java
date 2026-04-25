@@ -47,13 +47,15 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/jobs").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/jobs/all").permitAll()
 
-                        // 🔥 PROTECTED (IMPORTANT)
+                        // 🔒 protected job endpoints
                         .requestMatchers("/api/jobs/my").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/jobs/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/jobs/**").authenticated()
 
-                        // ✅ applications (already correct)
+                        // 🔒 applications
                         .requestMatchers("/api/applications/**").authenticated()
 
-                        // ✅ users
+                        // 🔒 users
                         .requestMatchers(HttpMethod.GET, "/users", "/users/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/users/**").authenticated()
 
@@ -65,7 +67,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // 🔥 REQUIRED for CORS to work with Spring Security
+    // ✅ CORS configuration
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();

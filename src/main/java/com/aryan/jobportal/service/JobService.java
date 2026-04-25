@@ -25,6 +25,7 @@ public class JobService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        job.setPostedBy(email);
         job.setCreatedBy(user); // ✅ IMPORTANT FIX
 
         return jobRepository.save(job);
@@ -44,6 +45,25 @@ public class JobService {
                 .orElseThrow(() -> new RuntimeException("Job not found"));
 
         return mapToResponse(job);
+    }
+
+    public void deleteJob(Long jobId, String email) {
+
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() -> new RuntimeException("Job not found"));
+
+        // 🔥 handle old data (IMPORTANT)
+        if (job.getCreatedBy() == null) {
+            System.out.println("Old job detected (createdBy is null)");
+            jobRepository.delete(job);
+            return;
+        }
+
+        if (!job.getCreatedBy().getEmail().equals(email)) {
+            throw new RuntimeException("Not allowed");
+        }
+
+        jobRepository.delete(job);
     }
 
     // ✅ GET JOBS BY RECRUITER (FIXED)

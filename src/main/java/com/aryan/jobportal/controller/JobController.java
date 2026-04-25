@@ -42,4 +42,12 @@ public class JobController {
         String email = authentication.getName();
         return jobService.getJobsByRecruiter(email);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteJob(@PathVariable Long id, Authentication authentication) {
+
+        String email = authentication.getName();
+
+        jobService.deleteJob(id, email);
+    }
 }

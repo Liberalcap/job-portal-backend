@@ -28,12 +28,29 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // ✅ FIXED REGISTER (NOW RETURNS TOKEN)
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public User register(@RequestBody User user) {
-        return userService.registerUser(user);
+    public AuthResponse register(@RequestBody User user) {
+
+        // Save user
+        User savedUser = userService.registerUser(user);
+
+        // Create UserDetails
+        UserDetails userDetails = org.springframework.security.core.userdetails.User
+                .withUsername(savedUser.getEmail())
+                .password(savedUser.getPassword())
+                .authorities(savedUser.getRole())
+                .build();
+
+        // Generate JWT token
+        String token = jwtService.generateToken(userDetails);
+
+        // Return response with token
+        return new AuthResponse(token, savedUser.getEmail(), savedUser.getRole());
     }
 
+    // ✅ LOGIN (ALREADY CORRECT)
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest authRequest) {
 
@@ -47,16 +64,17 @@ public class AuthController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password");
         }
 
-        // ✅ create token
+        // Create UserDetails
         UserDetails userDetails = org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
                 .password(user.getPassword())
                 .authorities(user.getRole())
                 .build();
 
+        // Generate token
         String token = jwtService.generateToken(userDetails);
 
-        // ✅ RETURN RESPONSE
+        // Return response
         return new AuthResponse(token, user.getEmail(), user.getRole());
     }
 }

@@ -3,9 +3,11 @@ package com.aryan.jobportal.controller;
 import com.aryan.jobportal.dto.ApplicationResponse;
 import com.aryan.jobportal.entity.Application;
 import com.aryan.jobportal.service.ApplicationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -27,6 +29,14 @@ public class ApplicationController {
 
         String email = authentication.getName(); // ✅ real user
         return applicationService.applyToJob(jobId, email);
+    }
+    @GetMapping("/check/{jobId}")
+    public ResponseEntity<Boolean> hasApplied(@PathVariable Long jobId, Principal principal) {
+        String email = principal.getName(); // logged-in user
+
+        boolean applied = applicationService.hasUserApplied(email, jobId);
+
+        return ResponseEntity.ok(applied);
     }
     @GetMapping("/my")
     public List<ApplicationResponse> getMyApplications(Authentication authentication) {

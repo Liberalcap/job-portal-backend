@@ -13,4 +13,5 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 
     // ✅ ADD THIS (for duplicate check)
     boolean existsByUserIdAndJobId(Long userId, Long jobId);
+    boolean existsByUserEmailAndJobId(String email, Long jobId);
 }

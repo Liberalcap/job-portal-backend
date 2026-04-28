@@ -39,6 +39,10 @@ public class ApplicationService {
                 .toList();
     }
 
+    public boolean hasUserApplied(String email, Long jobId) {
+        return applicationRepository.existsByUserEmailAndJobId(email, jobId);
+    }
+
     // ✅ APPLY TO JOB (UPDATED)
     public ApplicationResponse applyToJob(Long jobId, String email) {
 

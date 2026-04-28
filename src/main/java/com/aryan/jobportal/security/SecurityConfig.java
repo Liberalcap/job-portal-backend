@@ -43,22 +43,22 @@ public class SecurityConfig {
                         // ✅ auth endpoints
                         .requestMatchers("/api/auth/**", "/users/register", "/error").permitAll()
 
-                        // ✅ public job endpoints
-                        .requestMatchers(HttpMethod.GET, "/api/jobs").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/jobs/all").permitAll()
+                        // ✅ PUBLIC JOB APIs (VERY IMPORTANT FIX)
+                        .requestMatchers(HttpMethod.GET, "/api/jobs/**").permitAll()
 
-                        // 🔒 protected job endpoints
-                        .requestMatchers("/api/jobs/my").authenticated()
+                        // 🔒 PROTECTED JOB ACTIONS
                         .requestMatchers(HttpMethod.POST, "/api/jobs/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/jobs/**").authenticated()
+                        .requestMatchers("/api/jobs/my").authenticated()
 
-                        // 🔒 applications
+                        // 🔒 APPLICATIONS (apply job)
                         .requestMatchers("/api/applications/**").authenticated()
 
-                        // 🔒 users
+                        // 🔒 USERS
                         .requestMatchers(HttpMethod.GET, "/users", "/users/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/users/**").authenticated()
 
+                        // 🔒 everything else
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())

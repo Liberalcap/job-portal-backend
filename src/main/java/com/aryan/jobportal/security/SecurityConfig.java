@@ -58,6 +58,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/users", "/users/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/users/**").authenticated()
 
+                        .requestMatchers("/api/auth/reset-password").permitAll()
+
                         // 🔒 everything else
                         .anyRequest().authenticated()
                 )

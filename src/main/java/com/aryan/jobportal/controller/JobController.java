@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobs")
-@CrossOrigin(origins = "https://job-portal-frontend-mwadfn8vx-liberalcaps-projects.vercel.app")
+//@CrossOrigin(origins = "https://job-portal-frontend-mwadfn8vx-liberalcaps-projects.vercel.app")
 public class JobController {
 
     private final JobService jobService;

@@ -15,9 +15,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
                         .allowedOrigins(
-                                "https://job-portal-frontend-six-pi.vercel.app",
-                                "http://localhost:5173"
-                        )
+                                "https://job-portal-frontend-six-pi.vercel.app")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true)

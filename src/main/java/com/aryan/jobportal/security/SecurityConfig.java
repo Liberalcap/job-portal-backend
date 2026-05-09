@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**", "/users/register", "/error").permitAll()
 
                         // ✅ PUBLIC JOB APIs (VERY IMPORTANT FIX)
+                        .requestMatchers(HttpMethod.GET, "/api/jobs").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/jobs/**").permitAll()
 
                         // 🔒 PROTECTED JOB ACTIONS

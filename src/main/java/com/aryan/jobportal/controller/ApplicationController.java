@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/applications")
-@CrossOrigin(origins = "http://localhost:5173") //for backend and frontend
+@CrossOrigin(origins = "https://job-portal-frontend-six-pi.vercel.app")
 public class ApplicationController {
 
     private final ApplicationService applicationService;

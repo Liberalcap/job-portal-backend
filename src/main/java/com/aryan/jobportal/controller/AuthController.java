@@ -22,7 +22,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://job-portal-frontend-six-pi.vercel.app")
 public class AuthController {
 
     private final UserService userService;
@@ -122,7 +122,7 @@ public class AuthController {
 
         // Simulate email
         System.out.println(
-                "Reset Link: http://localhost:5173/reset-password/" + token
+                "Reset Link: https://job-portal-frontend-six-pi.vercel.app/reset-password/" + token
         );
 
         return "Reset link sent successfully.";

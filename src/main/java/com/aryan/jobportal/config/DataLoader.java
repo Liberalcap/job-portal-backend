@@ -24,17 +24,21 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        // ONLY add jobs if database is empty
-        if (jobRepository.count() == 0) {
+        User recruiter = userRepository.findByEmail("recruiter@gmail.com")
+                .orElse(null);
 
-            // Find recruiter user
-            User recruiter = userRepository.findByEmail("aryandubey055@gmail.com")
-                    .orElse(null);
+        if (recruiter == null) {
+            System.out.println("Recruiter not found");
+            return;
+        }
 
-            if (recruiter == null) {
-                System.out.println("Recruiter not found");
-                return;
-            }
+        // Check if demo jobs already exist
+        boolean googleExists = jobRepository
+                .findAll()
+                .stream()
+                .anyMatch(job -> "Google".equals(job.getCompany()));
+
+        if (!googleExists) {
 
             Job job1 = new Job();
             job1.setTitle("Software Engineer");

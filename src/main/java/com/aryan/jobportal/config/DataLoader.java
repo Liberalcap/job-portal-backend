@@ -24,7 +24,7 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        User recruiter = userRepository.findByEmail("recruiter@gmail.com")
+        User recruiter = userRepository.findByEmail("aryandubey055@gmail.com")
                 .orElse(null);
 
         if (recruiter == null) {

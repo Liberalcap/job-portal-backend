@@ -67,9 +67,40 @@ public class DataLoader implements CommandLineRunner {
             job3.setPostedBy(recruiter.getEmail());
             job3.setCreatedBy(recruiter);
 
+            Job job4 = new Job();
+            job1.setTitle("Software Developer");
+            job1.setCompany("J P Morgan");
+            job1.setLocation("Bangalore");
+            job1.setSalary(24.0);
+            job1.setDescription("Java Spring Boot backend development");
+            job1.setPostedBy(recruiter.getEmail());
+            job1.setCreatedBy(recruiter);
+
+            Job job5 = new Job();
+            job1.setTitle("UI-UX ");
+            job1.setCompany("Mancraft");
+            job1.setLocation("Mumbai");
+            job1.setSalary(12.0);
+            job1.setDescription("Experienced UI-UX Developer");
+            job1.setPostedBy(recruiter.getEmail());
+            job1.setCreatedBy(recruiter);
+
+            Job job6 = new Job();
+            job1.setTitle("Software Engineer");
+            job1.setCompany("Air India");
+            job1.setLocation("Gurgaon");
+            job1.setSalary(28.0);
+            job1.setDescription("Java Spring Boot backend development");
+            job1.setPostedBy(recruiter.getEmail());
+            job1.setCreatedBy(recruiter);
+
             jobRepository.save(job1);
             jobRepository.save(job2);
             jobRepository.save(job3);
+            jobRepository.save(job4);
+            jobRepository.save(job5);
+            jobRepository.save(job6);
+
 
             System.out.println("Demo jobs inserted successfully!");
         }

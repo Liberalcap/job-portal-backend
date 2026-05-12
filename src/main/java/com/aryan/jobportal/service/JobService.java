@@ -74,6 +74,39 @@ public class JobService {
                 .toList();
     }
 
+    // ✅ UPDATE JOB
+    public Job updateJob(Long jobId, Job updatedJob, String email) {
+
+        Job existingJob = jobRepository.findById(jobId)
+                .orElseThrow(() -> new RuntimeException("Job not found"));
+
+        // 🔥 handle old data
+        if (existingJob.getCreatedBy() == null) {
+
+            existingJob.setTitle(updatedJob.getTitle());
+            existingJob.setDescription(updatedJob.getDescription());
+            existingJob.setCompany(updatedJob.getCompany());
+            existingJob.setLocation(updatedJob.getLocation());
+            existingJob.setSalary(updatedJob.getSalary());
+
+            return jobRepository.save(existingJob);
+        }
+
+        // ✅ recruiter ownership check
+        if (!existingJob.getCreatedBy().getEmail().equals(email)) {
+            throw new RuntimeException("Not allowed");
+        }
+
+        // ✅ update fields
+        existingJob.setTitle(updatedJob.getTitle());
+        existingJob.setDescription(updatedJob.getDescription());
+        existingJob.setCompany(updatedJob.getCompany());
+        existingJob.setLocation(updatedJob.getLocation());
+        existingJob.setSalary(updatedJob.getSalary());
+
+        return jobRepository.save(existingJob);
+    }
+
     // ✅ SINGLE CLEAN MAPPER
     private JobResponse mapToResponse(Job job) {
         JobResponse dto = new JobResponse();

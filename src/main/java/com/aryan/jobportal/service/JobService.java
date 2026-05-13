@@ -7,6 +7,8 @@ import com.aryan.jobportal.repository.ApplicationRepository;
 import com.aryan.jobportal.repository.JobRepository;
 import com.aryan.jobportal.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,6 +60,7 @@ public class JobService {
     }
 
     // ✅ DELETE JOB
+    @Transactional
     public void deleteJob(Long jobId, String email) {
 
         Job job = jobRepository.findById(jobId)

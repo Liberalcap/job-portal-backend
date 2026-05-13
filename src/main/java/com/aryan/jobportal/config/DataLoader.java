@@ -68,31 +68,31 @@ public class DataLoader implements CommandLineRunner {
             job3.setCreatedBy(recruiter);
 
             Job job4 = new Job();
-            job1.setTitle("Software Developer");
-            job1.setCompany("J P Morgan");
-            job1.setLocation("Bangalore");
-            job1.setSalary(24.0);
-            job1.setDescription("Java Spring Boot backend development");
-            job1.setPostedBy(recruiter.getEmail());
-            job1.setCreatedBy(recruiter);
+            job4.setTitle("Software Developer");
+            job4.setCompany("J P Morgan");
+            job4.setLocation("Bangalore");
+            job4.setSalary(24.0);
+            job4.setDescription("Java Spring Boot backend development");
+            job4.setPostedBy(recruiter.getEmail());
+            job4.setCreatedBy(recruiter);
 
             Job job5 = new Job();
-            job1.setTitle("UI-UX ");
-            job1.setCompany("Mancraft");
-            job1.setLocation("Mumbai");
-            job1.setSalary(12.0);
-            job1.setDescription("Experienced UI-UX Developer");
-            job1.setPostedBy(recruiter.getEmail());
-            job1.setCreatedBy(recruiter);
+            job5.setTitle("UI-UX");
+            job5.setCompany("Mancraft");
+            job5.setLocation("Mumbai");
+            job5.setSalary(12.0);
+            job5.setDescription("Experienced UI-UX Developer");
+            job5.setPostedBy(recruiter.getEmail());
+            job5.setCreatedBy(recruiter);
 
             Job job6 = new Job();
-            job1.setTitle("Software Engineer");
-            job1.setCompany("Air India");
-            job1.setLocation("Gurgaon");
-            job1.setSalary(28.0);
-            job1.setDescription("Java Spring Boot backend development");
-            job1.setPostedBy(recruiter.getEmail());
-            job1.setCreatedBy(recruiter);
+            job6.setTitle("Software Engineer");
+            job6.setCompany("Air India");
+            job6.setLocation("Gurgaon");
+            job6.setSalary(28.0);
+            job6.setDescription("Java Spring Boot backend development");
+            job6.setPostedBy(recruiter.getEmail());
+            job6.setCreatedBy(recruiter);
 
             jobRepository.save(job1);
             jobRepository.save(job2);

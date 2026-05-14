@@ -32,7 +32,7 @@ public class DataLoader implements CommandLineRunner {
             System.out.println("Recruiter not found");
             return;
         }
-
+        // Jobs Coded
         insertJobIfNotExists(
                 "Google",
                 "Software Engineer",

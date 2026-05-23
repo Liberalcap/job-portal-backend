@@ -154,7 +154,7 @@ jobportal-backend/
 
 ```bash
 git clone https://github.com/Liberalcap/job-portal-backend.git
-cd jobportal
+cd job-portal-backend
 ```
 
 ---

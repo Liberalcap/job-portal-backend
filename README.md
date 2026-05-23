@@ -77,26 +77,72 @@ The backend follows a layered Spring Boot architecture:
 ## Folder Structure
 
 ```bash
-jobportal/
+jobportal-backend/
+├── .mvn/
+│   └── wrapper/
+│       └── maven-wrapper.properties
+│
 ├── src/
 │   ├── main/
-│   │   ├── java/com/aryan/jobportal/
-│   │   │   ├── config/
-│   │   │   ├── controller/
-│   │   │   ├── dto/
-│   │   │   ├── entity/
-│   │   │   ├── repository/
-│   │   │   ├── security/
-│   │   │   ├── service/
-│   │   │   └── JobportalApplication.java
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── aryan/
+│   │   │           └── jobportal/
+│   │   │
+│   │   │               ├── config/
+│   │   │               │   ├── CorsConfig.java
+│   │   │               │   └── DataLoader.java
+│   │   │               │
+│   │   │               ├── controller/
+│   │   │               │   ├── ApplicationController.java
+│   │   │               │   ├── AuthController.java
+│   │   │               │   ├── JobController.java
+│   │   │               │   └── UserController.java
+│   │   │               │
+│   │   │               ├── dto/
+│   │   │               │   ├── ApplicationResponse.java
+│   │   │               │   ├── AuthRequest.java
+│   │   │               │   ├── AuthResponse.java
+│   │   │               │   └── JobResponse.java
+│   │   │               │
+│   │   │               ├── entity/
+│   │   │               │   ├── Application.java
+│   │   │               │   ├── Job.java
+│   │   │               │   ├── PasswordResetToken.java
+│   │   │               │   └── User.java
+│   │   │               │
+│   │   │               ├── repository/
+│   │   │               │   ├── ApplicationRepository.java
+│   │   │               │   ├── JobRepository.java
+│   │   │               │   ├── PasswordResetTokenRepository.java
+│   │   │               │   └── UserRepository.java
+│   │   │               │
+│   │   │               ├── security/
+│   │   │               │   ├── CustomUserDetailsService.java
+│   │   │               │   ├── JwtAuthenticationFilter.java
+│   │   │               │   ├── JwtService.java
+│   │   │               │   └── SecurityConfig.java
+│   │   │               │
+│   │   │               ├── service/
+│   │   │               │   ├── ApplicationService.java
+│   │   │               │   ├── JobService.java
+│   │   │               │   └── UserService.java
+│   │   │               │
+│   │   │               └── JobportalApplication.java
+│   │   │
 │   │   └── resources/
+│   │       ├── static/
+│   │       ├── templates/
 │   │       └── application.properties
+│   │
 │   └── test/
-├── Dockerfile
+│       └── java/
+│
+├── target/
+├── .gitignore
 ├── mvnw
 ├── mvnw.cmd
 ├── pom.xml
-├── .gitignore
 └── README.md
 ```
 

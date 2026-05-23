@@ -228,11 +228,8 @@ http://localhost:8080
 
 ## Deployment
 
-Backend deployed using:
-- Render
-
-Docker support included using:
-- Dockerfile
+- Backend deployed using Render
+- Docker support included using Dockerfile
 
 ---
 
@@ -240,5 +237,4 @@ Docker support included using:
 
 Aryan Dubey
 
-GitHub:
-https://github.com/Liberalcap
+- GitHub: https://github.com/Liberalcap

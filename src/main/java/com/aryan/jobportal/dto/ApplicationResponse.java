@@ -8,5 +8,6 @@ public class ApplicationResponse {
     private Long id;
     private String userEmail;
     private String jobTitle;
+    private String company;
     private String status;
 }

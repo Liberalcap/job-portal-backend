@@ -110,6 +110,7 @@ public class ApplicationService {
 
         if (app.getJob() != null) {
             dto.setJobTitle(app.getJob().getTitle());
+            dto.setCompany(app.getJob().getCompany());
         }
 
         return dto;

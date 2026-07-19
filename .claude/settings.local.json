@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(gh api *)",
-      "Bash(gh repo *)"
+      "Bash(gh repo *)",
+      "Bash(git -C \"C:\\\\Projects\\\\jobportal\" remote -v)"
     ]
   }
 }

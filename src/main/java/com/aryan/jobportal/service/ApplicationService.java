@@ -7,6 +7,7 @@ import com.aryan.jobportal.entity.User;
 import com.aryan.jobportal.repository.ApplicationRepository;
 import com.aryan.jobportal.repository.JobRepository;
 import com.aryan.jobportal.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ public class ApplicationService {
         this.jobRepository = jobRepository;
     }
 
+    @Transactional
     public List<ApplicationResponse> getApplicationsByEmail(String email) {
 
         User user = userRepository.findByEmail(email)

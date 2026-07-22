@@ -1,6 +1,6 @@
 # Job Portal Backend
 
-Backend for a full-stack Job Portal web application built using Spring Boot, Spring Security, JWT Authentication, and MySQL.
+Backend for a full-stack Job Portal web application built using Spring Boot, Spring Security, JWT Authentication, Spring Data JPA, and PostgreSQL.
 
 This backend provides REST APIs for authentication, job management, applications, recruiter dashboards, and user management.
 
@@ -20,9 +20,9 @@ This backend provides REST APIs for authentication, job management, applications
 
 - JWT-based authentication
 - Spring Security integration
-- Role-based authorization
+- User role handling
 - Secure protected APIs
-- Forgot password & reset password support
+- Forgot password & reset password token support
 
 ### Job Management
 
@@ -41,9 +41,8 @@ This backend provides REST APIs for authentication, job management, applications
 ### User Management
 
 - User registration & login
-- Recruiter registration & login
-- User role handling
-- Protected recruiter routes
+- Role-based user management
+- Protected authenticated routes
 
 ---
 
@@ -54,7 +53,7 @@ This backend provides REST APIs for authentication, job management, applications
 - Spring Security
 - JWT Authentication
 - Spring Data JPA
-- MySQL
+- PostgreSQL
 - Maven
 - Docker
 - Render
@@ -65,12 +64,12 @@ This backend provides REST APIs for authentication, job management, applications
 
 The backend follows a layered Spring Boot architecture:
 
-- Controller Layer → Handles REST API requests
-- Service Layer → Business logic
-- Repository Layer → Database access
-- DTO Layer → Request/response handling
-- Security Layer → JWT & authentication logic
-- Config Layer → Application configuration
+- Controller Layer -> Handles REST API requests
+- Service Layer -> Business logic
+- Repository Layer -> Database access
+- DTO Layer -> Request/response handling
+- Security Layer -> JWT & authentication logic
+- Config Layer -> Application configuration
 
 ---
 
@@ -78,72 +77,75 @@ The backend follows a layered Spring Boot architecture:
 
 ```bash
 jobportal-backend/
-├── .mvn/
-│   └── wrapper/
-│       └── maven-wrapper.properties
-│
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/
-│   │   │       └── aryan/
-│   │   │           └── jobportal/
-│   │   │
-│   │   │               ├── config/
-│   │   │               │   ├── CorsConfig.java
-│   │   │               │   └── DataLoader.java
-│   │   │               │
-│   │   │               ├── controller/
-│   │   │               │   ├── ApplicationController.java
-│   │   │               │   ├── AuthController.java
-│   │   │               │   ├── JobController.java
-│   │   │               │   └── UserController.java
-│   │   │               │
-│   │   │               ├── dto/
-│   │   │               │   ├── ApplicationResponse.java
-│   │   │               │   ├── AuthRequest.java
-│   │   │               │   ├── AuthResponse.java
-│   │   │               │   └── JobResponse.java
-│   │   │               │
-│   │   │               ├── entity/
-│   │   │               │   ├── Application.java
-│   │   │               │   ├── Job.java
-│   │   │               │   ├── PasswordResetToken.java
-│   │   │               │   └── User.java
-│   │   │               │
-│   │   │               ├── repository/
-│   │   │               │   ├── ApplicationRepository.java
-│   │   │               │   ├── JobRepository.java
-│   │   │               │   ├── PasswordResetTokenRepository.java
-│   │   │               │   └── UserRepository.java
-│   │   │               │
-│   │   │               ├── security/
-│   │   │               │   ├── CustomUserDetailsService.java
-│   │   │               │   ├── JwtAuthenticationFilter.java
-│   │   │               │   ├── JwtService.java
-│   │   │               │   └── SecurityConfig.java
-│   │   │               │
-│   │   │               ├── service/
-│   │   │               │   ├── ApplicationService.java
-│   │   │               │   ├── JobService.java
-│   │   │               │   └── UserService.java
-│   │   │               │
-│   │   │               └── JobportalApplication.java
-│   │   │
-│   │   └── resources/
-│   │       ├── static/
-│   │       ├── templates/
-│   │       └── application.properties
-│   │
-│   └── test/
-│       └── java/
-│
-├── target/
-├── .gitignore
-├── mvnw
-├── mvnw.cmd
-├── pom.xml
-└── README.md
+|-- .mvn/
+|   `-- wrapper/
+|       `-- maven-wrapper.properties
+|
+|-- src/
+|   |-- main/
+|   |   |-- java/
+|   |   |   `-- com/
+|   |   |       `-- aryan/
+|   |   |           `-- jobportal/
+|   |   |               |-- config/
+|   |   |               |   |-- CorsConfig.java
+|   |   |               |   `-- DataLoader.java
+|   |   |               |
+|   |   |               |-- controller/
+|   |   |               |   |-- ApplicationController.java
+|   |   |               |   |-- AuthController.java
+|   |   |               |   |-- JobController.java
+|   |   |               |   `-- UserController.java
+|   |   |               |
+|   |   |               |-- dto/
+|   |   |               |   |-- ApplicationResponse.java
+|   |   |               |   |-- AuthRequest.java
+|   |   |               |   |-- AuthResponse.java
+|   |   |               |   `-- JobResponse.java
+|   |   |               |
+|   |   |               |-- entity/
+|   |   |               |   |-- Application.java
+|   |   |               |   |-- Job.java
+|   |   |               |   |-- PasswordResetToken.java
+|   |   |               |   `-- User.java
+|   |   |               |
+|   |   |               |-- repository/
+|   |   |               |   |-- ApplicationRepository.java
+|   |   |               |   |-- JobRepository.java
+|   |   |               |   |-- PasswordResetTokenRepository.java
+|   |   |               |   `-- UserRepository.java
+|   |   |               |
+|   |   |               |-- security/
+|   |   |               |   |-- CustomUserDetailsService.java
+|   |   |               |   |-- JwtAuthenticationFilter.java
+|   |   |               |   |-- JwtService.java
+|   |   |               |   `-- SecurityConfig.java
+|   |   |               |
+|   |   |               |-- service/
+|   |   |               |   |-- ApplicationService.java
+|   |   |               |   |-- JobService.java
+|   |   |               |   `-- UserService.java
+|   |   |               |
+|   |   |               `-- JobportalApplication.java
+|   |   |
+|   |   `-- resources/
+|   |       |-- static/
+|   |       |-- templates/
+|   |       `-- application.properties
+|   |
+|   `-- test/
+|       `-- java/
+|           `-- com/
+|               `-- aryan/
+|                   `-- jobportal/
+|                       `-- JobportalApplicationTests.java
+|
+|-- .gitignore
+|-- Dockerfile
+|-- mvnw
+|-- mvnw.cmd
+|-- pom.xml
+`-- README.md
 ```
 
 ---
@@ -164,11 +166,11 @@ cd job-portal-backend
 Configure the following environment variables:
 
 ```env
-SPRING_DATASOURCE_URL=
-SPRING_DATASOURCE_USERNAME=
-SPRING_DATASOURCE_PASSWORD=
-APP_JWT_SECRET=
-APP_JWT_EXPIRATION_MS=
+SPRING_DATASOURCE_URL=jdbc:postgresql://...
+SPRING_DATASOURCE_USERNAME=your_username
+SPRING_DATASOURCE_PASSWORD=your_password
+APP_JWT_SECRET=your_jwt_secret
+APP_JWT_EXPIRATION_MS=86400000
 ```
 
 ---
@@ -191,28 +193,35 @@ http://localhost:8080
 
 ### Authentication APIs
 
-- POST `/auth/register`
-- POST `/auth/login`
-- POST `/auth/forgot-password`
-- POST `/auth/reset-password`
+- POST `/api/auth/register`
+- POST `/api/auth/login`
+- POST `/api/auth/forgot-password`
+- POST `/api/auth/reset-password`
 
 ### Job APIs
 
-- GET `/jobs`
-- GET `/jobs/{id}`
-- POST `/jobs`
-- PUT `/jobs/{id}`
-- DELETE `/jobs/{id}`
+- GET `/api/jobs`
+- GET `/api/jobs/{id}`
+- GET `/api/jobs/my`
+- POST `/api/jobs`
+- PUT `/api/jobs/{id}`
+- DELETE `/api/jobs/{id}`
 
 ### Application APIs
 
-- POST `/applications/apply`
-- GET `/applications/my-applications`
+- POST `/api/applications/{jobId}`
+- GET `/api/applications/check/{jobId}`
+- GET `/api/applications/my`
+- GET `/api/applications/job/{jobId}`
+- PUT `/api/applications/{id}/status?status=APPLIED`
 
 ### User APIs
 
+- POST `/users/register`
 - GET `/users`
 - GET `/users/{id}`
+- PUT `/users/{id}`
+- DELETE `/users/{id}`
 
 ---
 
@@ -235,6 +244,6 @@ http://localhost:8080
 
 ## Author
 
-Aryan Dubey
+**Aryan Dubey**
 
 - GitHub: https://github.com/Liberalcap
